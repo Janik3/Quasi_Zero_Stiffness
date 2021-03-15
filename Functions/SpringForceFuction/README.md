@@ -5,13 +5,13 @@ The files in this folder are various stiffness functions for springs. This inclu
 ## BuckleBeam.m
 The function for this code was obtained from [[1]](#1). The resultant force is the force in the vertical direction
 
-| Parameter     | Explanation |
-| ------------- | :-------------: |
-| x             |Displacement(meters)|
-| P_e           |P<sub>e</sub> = EI( &pi; /L)<sup>2</sup>  - Classic Euler critical load for hinge-hinged boundary|
-|a              |Horizontal distance between mass and reference (see diagram)|
-|L              |Full Length of the beam|
-|q_0            |Initial imperfection at the center of the beam|
+| Parameter     | Explanation | Units
+| ------------- | :-------------: |:-------------: |
+| x             |Displacement| Meter |
+| P_e           |P<sub>e</sub> = EI( &pi; /L)<sup>2</sup>  - Classic Euler critical load for hinge-hinged boundary| Newtons|
+|a              |Horizontal distance between mass and reference (see diagram)|Meter |
+|L              |Full Length of the beam| Meter|
+|q_0            |Initial imperfection at the center of the beam| Meter|
 
 <img src="./Images/BuckleBeam.PNG" alt="" style="width:400px;"/>
 
@@ -20,24 +20,24 @@ Image obtained from [[1]](#1).
 ## F_horzSpring_y.m
 The function for this code uses horizontal springs for the negative stiffness element. The resultant force is the force in the vertical direction
 
-| Parameter     | Explanation |
-| ------------- | :-------------: |
-| x             |Displacement(meters)|
-| K_h           |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction|
-|L_0            |Full Length of the springs under no load|
-|L_min          |Minimum Length of the springs (springs horizontal)|
-|h_0            |Height of the horizontal springs under no load|
+| Parameter     | Explanation | Units
+| ------------- | :-------------:                                       |:-------------:|
+| x             |Displacement                                           | Meter|
+| K_h           |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction| Newtons/Meter|
+|L_0            |Full Length of the springs under no load               |Meter|
+|L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
+|h_0            |Height of the horizontal springs under no load         |Meter|
 
 <img src="./Images/HorizontalSpring.PNG" alt="" style="width:400px;"/>
 
 ## F_vertSpring_y.m
-Linear approximation of springs with the resultant force acting along the axial direction (Postive stiffness). Offset of x can be provided. 
+Linear approximation of springs with the resultant force acting along the axial direction (Postive stiffness). An offset can be provided to the displacment x 
 
-| Parameter     | Explanation |
-| ------------- | :-------------: |
-| x             |Displacement(meters)|
-| K_v           |Spring Stiffness |
-|h_0            |Height of the horizontal springs under no load|
+| Parameter     | Explanation | Untis
+| ------------- | :-------------:       |:-------------: |
+| x             |Displacement           |Meter|
+| K_v           |Spring Stiffness       |Newtons/meter|
+|h_0            |Desired spring offset  |Meter|
 
 ## References
 
