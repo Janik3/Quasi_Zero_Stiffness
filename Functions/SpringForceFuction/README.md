@@ -13,7 +13,7 @@ The function for this code was obtained from [[1]](#1). The resultant force is t
 |L              |Full Length of the beam|
 |q_0            |Initial imperfection at the center of the beam|
 
-<img src="./Images/BuckleBeam.png" alt="drawing" style="width:400px;"/>
+<img src="./Images/BuckleBeam.PNG" alt="" style="width:400px;"/>
 
 Image obtained from [[1]](#1).
 
@@ -28,7 +28,7 @@ The function for this code uses horizontal springs for the negative stiffness el
 |L_min          |Minimum Length of the springs (springs horizontal)|
 |h_0            |Height of the horizontal springs under no load|
 
-<img src="./Images/HorizontalSpring.png" alt="drawing" style="width:400px;"/>
+<img src="./Images/HorizontalSpring.PNG" alt="" style="width:400px;"/>
 
 ## F_vertSpring_y.m
 Linear approximation of springs with the resultant force acting along the axial direction (Postive stiffness). Offset of x can be provided. 
