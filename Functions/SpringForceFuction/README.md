@@ -5,6 +5,11 @@ The files in this folder are various stiffness functions for springs. This inclu
 ## BuckleBeam.m
 The function for this code was obtained from [[1]](#1). The resultant force is the force in the vertical direction
 
+### Function: 
+* F = BuckleBeam(x, P_e, a, L, q_0)
+
+### Parameters:
+
 | Parameter     | Explanation | Units
 | ------------- | :-------------: |:-------------: |
 | x             |Displacement| Meter |
@@ -17,27 +22,52 @@ The function for this code was obtained from [[1]](#1). The resultant force is t
 
 Image obtained from [[1]](#1).
 
+### Output:
+| Parameter     | Explanation | Units
+| ------------- | :-------------: |:-------------: |
+| F             |Force| Newtons |
+
 ## F_horzSpring_y.m
 The function for this code uses horizontal springs for the negative stiffness element. The resultant force is the force in the vertical direction
+
+### Function: 
+* F_y = F_horzSpring_y(x, K_h, L_0, L_min, h_0)
+
+### Parameters:
 
 | Parameter     | Explanation | Units
 | ------------- | :-------------:                                       |:-------------:|
 | x             |Displacement                                           | Meter|
 | K_h           |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction| Newtons/Meter|
-|L_0            |Full Length of the springs under no load               |Meter|
+|L_0            |Full Length of the springs under no-load               |Meter|
 |L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
-|h_0            |Height of the horizontal springs under no load         |Meter|
+|h_0            |Height of the horizontal springs under no-load         |Meter|
 
 <img src="./Images/HorizontalSpring.PNG" alt="" style="width:400px;"/>
 
-## F_vertSpring_y.m
-Linear approximation of springs with the resultant force acting along the axial direction (Postive stiffness). An offset can be provided to the displacment x 
+### Output:
+| Parameter     | Explanation | Units
+| ------------- | :-------------: |:-------------: |
+| F_y             |Force| Newtons |
 
-| Parameter     | Explanation | Untis
+## F_vertSpring_y.m
+Linear approximation of springs with the resultant force acting along the axial direction (Positive stiffness). An offset can be provided to the displacement x 
+
+### Function 
+F_y = F_vertSpring_y(x, K_v, h_0)
+
+### Parameters:
+
+| Parameter     | Explanation | Units
 | ------------- | :-------------:       |:-------------: |
 | x             |Displacement           |Meter|
 | K_v           |Spring Stiffness       |Newtons/meter|
 |h_0            |Desired spring offset  |Meter|
+
+### Output:
+| Parameter     | Explanation | Units
+| ------------- | :-------------: |:-------------: |
+| F_y             |Force| Newtons |
 
 ## References
 
