@@ -1,9 +1,8 @@
 # Introduction
-
-
+Main functions that are used by the various QZS models
 
 ## ampratiomeasure.m
-Get the amplitude ratio of two time domain signals x and 
+Get the amplitude ratio of two time-domain signals x and 
 
 ### Function: 
 * AmpRat = ampratiomeasure(x, y)
@@ -21,7 +20,7 @@ Get the amplitude ratio of two time domain signals x and
 | Amp           | Ratio of signal amplitudes| [None]|
 
 ## designedSystem.m
-State space implementation of a single degree of freedom Mass/Damper/Spring system. Implements non-linear stiffness within the model by recalculating the stiffness each time the function is called. Obtains an input signal from the "inputFn.m" file. The input is ground excitation. 
+State-space implementation of a single degree of freedom Mass/Damper/Spring system. Implements non-linear stiffness within the model by recalculating the stiffness each time the function is called. Obtains an input signal from the "inputFn.m" file. The input is ground excitation. 
 
 <img src="./SpringForceFuction/Images/SDOFGroundExcitation.PNG" alt="" style="width:400px;"/>
 
@@ -32,10 +31,16 @@ State space implementation of a single degree of freedom Mass/Damper/Spring syst
 
 | Parameter     | Explanation               | Units
 | ------------- | :-------------:           |:-------------:|
-| t             |Time                       | Seconds|
-| q             |State of the system        | [None]|
-| m             |Mass of the                | [None]|
-| q             |State of the system        | [None]|
+| t             |Time                       | Seconds       |
+| q             |State of the system        | [None]        |
+| freq          |Signal Frequency           | Hz            |
+| multiplier    |Amplitude of the sinusoid  | [None]        |
+| m             |Mass of the system         | kg            |
+| c             |System damping coefficient | Ns/m          |
+|h_0            |Height of the horizontal springs under no-load         |Meter|
+|L_0            |Full Length of the springs under no-load               |Meter|
+|L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
+|K_h            |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction| Newtons/Meter|
 
 ### Output:
 | Parameter     | Explanation               | Units
@@ -76,7 +81,7 @@ Allow the user to define an input function with given frequency and amplitude.
 | ------------- | :-------------:           |:-------------:|
 | t             |Time                       | Second        |
 | freq          |Signal Frequency           | Hz            |
-| multiplier    |Amplitude of the sinusoid  | [None]|
+| multiplier    |Amplitude of the sinusoid  | [None]        |
 
 ### Output:
 | Parameter     | Explanation               | Units
