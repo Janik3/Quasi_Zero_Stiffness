@@ -8,6 +8,8 @@ function F_y = F_horzSpring_y(x, K_h, L_0, L_min, h_0)
     % |L_0            |Full Length of the springs under no load               |Meter|
     % |L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
     % |h_0            |Height of the horizontal springs under no load         |Meter|
-    
-    F_y =  2*K_h*(L_0 - (L_min^2+(h_0-x)^2)^(1/2))*(h_0-x)/((L_min^2+(h_0-x)^2)^(1/2));
+
+    L = sqrt((h_0-x)^2 + L_min^2)
+
+    F_y =  2*K_h*(L - L_0)*(x-h_0)/(L);
 end

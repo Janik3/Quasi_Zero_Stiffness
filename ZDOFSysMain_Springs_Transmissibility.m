@@ -10,6 +10,7 @@ h_0 = 3/12*.3048; % initial height from horizontal to top (converting inches to 
 L_0 = 4/12*.3048; %length of horizontal springs (converting inches to m)
 L_min = sqrt(L_0^2-h_0^2); %min length of horizontal spring (check spring specs to make sure physically possible) 
 K_h = 17513.38; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
+preload_Dist = 2/12*.3048; % preload on the vertical spring when x=0 (converting inches to m)
 
 %% Create F and K plots for the designed Zero Stiffness System
 
@@ -45,7 +46,7 @@ K_v = -vpa(subs(k,x,h_0));
  
 % F and K for the Zero Stiffness System (negative stiffness + positive
 % stiffness) 
-F_tot = F_horzSpring_y(x, K_h, L_0, L_min, h_0) + F_vertSpring_y(x, K_v, h_0);
+F_tot = F_horzSpring_y(x, K_h, L_0, L_min, h_0) + F_vertSpring_y(x, K_v, preload_Dist);
 k_tot = diff(F_tot);
 
 %Convert to numbers

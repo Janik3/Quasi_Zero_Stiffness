@@ -8,7 +8,7 @@ function dydt = designedSystem(t,q,freq,multiplier,m,c, h_0, L_0, L_min, K_h)
     %%%%%%%%%%%%%%%%
     
     %nonlinear stiffness (update depending on current states)
-    k = get_k_nonLinear(q(1), h_0, L_0, L_min, K_h);
+    k = get_k_nonLinear(q(1), h_0, L_0, L_min, K_h, preload_dist);
     
     u = inputFn(t,freq,multiplier);%input
 

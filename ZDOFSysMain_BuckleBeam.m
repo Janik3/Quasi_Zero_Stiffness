@@ -12,6 +12,8 @@ L = 4/12*.3048; % origional length of beams (converting inches to m)
 a = 3.5/12*.3048; % horizontal distance from wall to center portion (converting inches to m)
 q_0 = 0.25/12*.3048; %initial imperfection (converting inches to m)
 
+preload_Dist = 2/12*.3048; % preload on the vertical spring when x=0 (converting inches to m)
+
 E = 70e9; %steel
 b = 0.05; %in m
 h = 0.001214; %in m, 18 gauge sheet metal https://www.metalsupermarkets.com/sheet-metal-gauge-chart/
@@ -61,7 +63,7 @@ for i=1:length(a_vec)
 
     % F and K for the Zero Stiffness System (negative stiffness + positive
     % stiffness) 
-    F_tot = BuckleBeam(x, P_e, a, L, q_0) + F_vertSpring_y(x, K_v, h_0);
+    F_tot = BuckleBeam(x, P_e, a, L, q_0) + F_vertSpring_y(x, K_v, preload_Dist);
     k_tot = diff(F_tot);
 
     %Convert to numbers
