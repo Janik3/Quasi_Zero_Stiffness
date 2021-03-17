@@ -38,7 +38,7 @@ The function for this code uses horizontal springs for the negative stiffness el
 | Parameter     | Explanation | Units
 | ------------- | :-------------:                                       |:-------------:|
 | x             |Displacement                                           | Meter|
-| K_h           |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction| Newtons/Meter|
+| K_h           |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction)| Newtons/Meter|
 |L_0            |Full Length of the springs under no-load               |Meter|
 |L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
 |h_0            |Height of the horizontal springs under no-load         |Meter|
