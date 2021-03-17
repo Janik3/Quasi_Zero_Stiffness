@@ -54,7 +54,7 @@ The function for this code uses horizontal springs for the negative stiffness el
 Linear approximation of springs with the resultant force acting along the axial direction (Positive stiffness). An offset can be provided to the displacement x 
 
 ### Function 
-F_y = F_vertSpring_y(x, K_v, h_0)
+F_y = F_vertSpring_y(x, K_v, preload_dist)
 
 ### Parameters:
 
@@ -63,6 +63,7 @@ F_y = F_vertSpring_y(x, K_v, h_0)
 | x             |Displacement           |Meter|
 | K_v           |Spring Stiffness       |Newtons/meter|
 |h_0            |Desired spring offset  |Meter|
+|preload_dist   |Initial preload on the vertical spring when x=0        |Meter|
 
 ### Output:
 | Parameter     | Explanation | Units

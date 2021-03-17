@@ -51,7 +51,7 @@ State-space implementation of a single degree of freedom Mass/Damper/Spring syst
 Use the system parameters for the Quasi-Zero Stiffness System to determine the stiffness at a given state of the system. 
 
 ### Function: 
-* k_nonLinear = get_k_nonLinear(x_in, h_0, L_0, L_min, K_h)
+* k_nonLinear = get_k_nonLinear(x_in, h_0, L_0, L_min, K_h, preload_dist)
 
 ### Parameters:
 
@@ -62,6 +62,7 @@ Use the system parameters for the Quasi-Zero Stiffness System to determine the s
 |L_0            |Full Length of the springs under no-load               |Meter|
 |L_min          |Minimum Length of the springs (springs horizontal)     |Meter|
 |K_h            |Horizontal Spring Stiffness (spring providing the negative stiffness in the vertical direction| Newtons/Meter|
+|preload_dist   |Initial preload on the vertical spring when x=0        |Meter|
 
 
 ### Output:
