@@ -1,4 +1,4 @@
-function dydt = designedSystem(t,q,freq,multiplier,m,c, h_0, L_0, L_min, K_h)
+function dydt = designedSystem(t,q,freq,multiplier,m,c, h_0, L_0, L_min, K_h, preload_dist)
     %horizontal spring y component force
     %SDOF with gound excitation
     

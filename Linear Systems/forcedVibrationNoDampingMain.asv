@@ -1,0 +1,22 @@
+clear all;
+close all;
+clc; 
+
+m1 = 5
+m2 = 5
+k1 = 5
+k2 = 5
+f1 = 1
+f2 = 2
+omega
+
+M = [m1 0;
+    0   m2];
+
+K = [k1+k2 -k2;
+    -k2   k2]];
+
+F = [f1);
+    f2];
+    
+trans = forcedVibrationNoDamping(K,M,F,omega);

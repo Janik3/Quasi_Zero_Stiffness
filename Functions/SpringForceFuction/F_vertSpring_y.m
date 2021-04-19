@@ -5,6 +5,6 @@ function F_y = F_vertSpring_y(x, K_v, preload_dist)
     % | ------------- | :-------------:       |:-------------: |
     % | x             |Displacement           |Meter|
     % | K_v           |Spring Stiffness       |Newtons/meter|
-    % |h_0            |Desired spring offset  |Meter|
+    % |preload_dist   |Desired spring offset  |Meter|
     F_y =  K_v*(x+preload_dist);
 end

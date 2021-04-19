@@ -1,5 +1,6 @@
 % This program requires a "Figures" and "Files" folder be created in the
 % same folder as the program 
+addpath(genpath(pwd)) % add all subfolders to path
 
 clear all;
 close all;
@@ -10,7 +11,7 @@ h_0 = 3/12*.3048; % initial height from horizontal to top (converting inches to 
 L_0 = 4/12*.3048; %length of horizontal springs (converting inches to m)
 L_min = sqrt(L_0^2-h_0^2); %min length of horizontal spring (check spring specs to make sure physically possible) 
 K_h = 17513.38; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
-preload_Dist = 2/12*.3048; % preload on the vertical spring when x=0 (converting inches to m)
+preload_dist = 2/12*.3048; % preload on the vertical spring when x=0 (converting inches to m)
 
 %% Create F and K plots for the designed Zero Stiffness System
 
@@ -46,7 +47,7 @@ K_v = -vpa(subs(k,x,h_0));
  
 % F and K for the Zero Stiffness System (negative stiffness + positive
 % stiffness) 
-F_tot = F_horzSpring_y(x, K_h, L_0, L_min, h_0) + F_vertSpring_y(x, K_v, preload_Dist);
+F_tot = F_horzSpring_y(x, K_h, L_0, L_min, h_0) + F_vertSpring_y(x, K_v, preload_dist);
 k_tot = diff(F_tot);
 
 %Convert to numbers
@@ -121,7 +122,7 @@ for i = 1:1:length(freqList)
         %%%%%%%%%%%%% Perform the time domain simulation %%%%%%%%%%%%%
         %
         %
-        [t_out, y_out] = ode45(@(t,y) designedSystem(t,y,freq,multiplier,m,c, h_0, L_0, L_min, K_h), t_span, x);
+        [t_out, y_out] = ode45(@(t,y) designedSystem(t,y,freq,multiplier,m,c, h_0, L_0, L_min, K_h, preload_dist), t_span, x);
         %
         %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -148,6 +149,7 @@ end
 
 %Positive Stiffness Transmissibility (closed form, may be incorreect) 
 omega = [0:0.25:10]
+%omega = freq/180*pi
 trans_vert = @(omega) sqrt(k_v.^2 + (c.*omega).^2)./sqrt((-m.*omega.^2 + k_v).^2 + (c.*omega).^2)
 trans_vert_nums = feval(trans_vert,omega*2*pi);
 
