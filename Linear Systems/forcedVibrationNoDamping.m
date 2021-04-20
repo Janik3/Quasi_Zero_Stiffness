@@ -1,4 +1,4 @@
-function X = forced_vibration(K,M,f,omega)
+function X = forcedVibrationNoDamping(K,M,f,omega)
 
 % obtained from https://www.brown.edu/Departments/Engineering/Courses/En4/Notes/vibrations_mdof/vibrations_mdof.htm
 
