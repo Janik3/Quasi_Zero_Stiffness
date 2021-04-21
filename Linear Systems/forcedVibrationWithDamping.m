@@ -1,5 +1,8 @@
    function [amp,phase] = damped_forced_vibration(D,M,f,omega)
 
+   % obtained from https://www.brown.edu/Departments/Engineering/Courses/En4/Notes/vibrations_mdof/vibrations_mdof.htm
+
+   
     % Function to calculate steady state amplitude of
     % a forced linear system.
     % D is 2nx2n the stiffness/damping matrix
