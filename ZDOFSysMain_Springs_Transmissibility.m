@@ -78,29 +78,30 @@ hold off;
 trans = []; 
 freq_trans = [];
 % list of frequencies to simulate in time domain 
-freqList = [0.05,0.125,0.25,0.375,0.5,0.625,0.75,0.875,2,5,10];
+freqList = [0.05,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,1.5,2,3,4,5,6,7,8,9,10];
+freqList = 0.5:0.1:6;
+
+multiplier = 0.01; %5mm amplitude for input
+m = 50; %in kg
+zeta = 0.1; %damping ratio
+k_v = double(K_v); % vertical spring stiffness 
+w_n = sqrt(k_v/m); % natural frequency of positive stiffness sys
+c = 2*zeta*w_n*m; % damping for system 
+
+%get the nonlinear k
+disp_range = -100:0.01:100;
+k_plot = get_k_nonLinear(disp_range, h_0, L_0, L_min, K_h, preload_dist);
 
 for i = 1:1:length(freqList)
-    forceSim = 0; % used to manually force a simulation that has previously already been completed
+    forceSim = 1; % used to manually force a simulation that has previously already been completed
     
     %Print to screen 
     "Simulation at a frequency of :"
     freq = freqList(i)
     
-    multiplier = 0.005; %5mm amplitude for input
-    m = 50; %in kg
-    zeta = 0.3; %damping ratio
-    k_v = double(K_v); % vertical spring stiffness 
-    w_n = sqrt(k_v/m); % natural frequency of positive stiffness sys
-    c = 2*zeta*w_n; % damping for system 
-    
     % time variables (Change as required)
-    tf = 20/freq; % Final time 
-    % force certain simulations to update using special parameters
-%     if freq == 0.625
-%         tf = 50/freq;
-%         forceSim = 1; 
-%     end
+    tf = 40/freq; % Final time 
+
     T = 0.001; % Sampling time
     t = 0:T:tf; % time vector
     t_span = [0 tf];
@@ -122,7 +123,7 @@ for i = 1:1:length(freqList)
         %%%%%%%%%%%%% Perform the time domain simulation %%%%%%%%%%%%%
         %
         %
-        [t_out, y_out] = ode45(@(t,y) designedSystem(t,y,freq,multiplier,m,c, h_0, L_0, L_min, K_h, preload_dist), t_span, x);
+        [t_out, y_out] = ode45(@(t,y) designedSystem(t,y,freq,multiplier,m,c, disp_range, k_plot), t, x);
         %
         %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
