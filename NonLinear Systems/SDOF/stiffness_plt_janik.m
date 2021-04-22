@@ -1,6 +1,6 @@
 % This program requires a "Figures" and "Files" folder be created in the
 % same folder as the program 
-addpath(genpath(pwd)) % add all subfolders to path
+addpath(genpath('\\north.cfs.uoguelph.ca\soe-other-home$\jhabegge\My Documents\MASc\Matlab\ZSS')) % add all subfolders to path
 clear all;
 close all;
 clc;

@@ -5,7 +5,7 @@ clear all;
 close all;
 clc;
 
-addpath(genpath(pwd)) % add all subfolders to path
+addpath(genpath('\\north.cfs.uoguelph.ca\soe-other-home$\jhabegge\My Documents\MASc\Matlab\ZSS')) % add all subfolders to path
 
 %% Define the system variables
 L = 4/12*.3048; % origional length of beams (converting inches to m)
