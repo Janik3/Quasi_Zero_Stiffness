@@ -12,5 +12,5 @@ function dydt = designedSystem(t,q,freq,multiplier,m,c,disp_range,k_plot)
     
     u = inputFn(t,freq,multiplier);%input
 
-    dydt =  [q(2)+u; -k/m*q(1)-c/m*q(2)+(-c+k)/m*u];
+    dydt =  [q(2)+u; -k/m*q(1)-c/m*q(2)+(-(c/m)^2+(k/m))*u];
 end
