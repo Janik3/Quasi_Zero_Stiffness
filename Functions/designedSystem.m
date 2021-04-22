@@ -1,4 +1,4 @@
-function dydt = designedSystem(t,q,freq,multiplier,m,c, disp_range, k_plot)
+function dydt = designedSystem(t,q,freq,multiplier,m,c,disp_range,k_plot)
     %horizontal spring y component force
     %SDOF with gound excitation
     
@@ -8,7 +8,6 @@ function dydt = designedSystem(t,q,freq,multiplier,m,c, disp_range, k_plot)
     %%%%%%%%%%%%%%%%
     
     %nonlinear stiffness (update depending on current states)
-    q(1)
     k = interp1(disp_range,k_plot,q(1))
     
     u = inputFn(t,freq,multiplier);%input
