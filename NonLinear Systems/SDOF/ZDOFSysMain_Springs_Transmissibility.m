@@ -79,11 +79,11 @@ trans = [];
 freq_trans = [];
 % list of frequencies to simulate in time domain 
 freqList = [0.05,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,1.5,2,3,4,5,6,7,8,9,10];
-freqList = 0.5:0.1:6;
+freqList = 0.5:0.2:7;
 
-multiplier = 0.01; %5mm amplitude for input
+multiplier = 0.01; % amplitude for input
 m = 50; %in kg
-zeta = 0.1; %damping ratio
+zeta = 0.2; %damping ratio
 k_v = double(K_v); % vertical spring stiffness 
 w_n = sqrt(k_v/m); % natural frequency of positive stiffness sys
 c = 2*zeta*w_n*m; % damping for system 
@@ -111,7 +111,7 @@ for i = 1:1:length(freqList)
     u = inputFn(t,freq,multiplier);
     
     %for saving results (speeds up runs in the future) 
-    figName = strcat('Figures/','ZSS, ', num2str(freq) ,',',  num2str(multiplier), ',', num2str(m), ',', num2str(zeta), ',' , num2str(k_v), '.jpeg');
+    figName = strcat('Figures/','ZSS_ ', strrep(num2str(freq),'.','') ,'_',  strrep(num2str(multiplier),'.',''), '_', strrep(num2str(m),'.',''), '_', strrep(num2str(zeta),'.',''), '_' , strrep(num2str(k_v),'.',''), '.jpeg');
     fileNameTime = strcat('Files/','ZSS, ', num2str(freq) ,',',  num2str(multiplier), ',', num2str(m), ',', num2str(zeta), ',' , num2str(k_v), 'time.txt');
     fileNameVals = strcat('Files/','ZSS, ', num2str(freq) ,',',  num2str(multiplier), ',', num2str(m), ',', num2str(zeta), ',' , num2str(k_v), 'vals.txt');
     

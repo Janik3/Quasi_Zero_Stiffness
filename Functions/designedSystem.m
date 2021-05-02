@@ -8,9 +8,9 @@ function dydt = designedSystem(t,q,freq,multiplier,m,c,disp_range,k_plot)
     %%%%%%%%%%%%%%%%
     
     %nonlinear stiffness (update depending on current states)
-    k = interp1(disp_range,k_plot,q(1))
+    k = interp1(disp_range,k_plot,q(1));
     
     u = inputFn(t,freq,multiplier);%input
 
-    dydt =  [q(2)+u; -k/m*q(1)-c/m*q(2)+(-(c/m)^2+(k/m))*u];
+    dydt =  [q(2)+(c/m)*u; -k/m*q(1)-c/m*q(2)+(-(c/m)^2+(k/m))*u];
 end

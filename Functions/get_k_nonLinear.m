@@ -1,4 +1,4 @@
-function k_nonLinear = get_k_nonLinear(x_in, h_0, L_0, L_min, K_h, preload_dist)
+function k_nonLinear = get_k_nonLinear(x_in, h_0, L_0, L_min, K_h, preload_dist, M_above)
     %% Define the non-linear F and K based on their equations
     % The equations
     syms 'x' 
@@ -6,7 +6,9 @@ function k_nonLinear = get_k_nonLinear(x_in, h_0, L_0, L_min, K_h, preload_dist)
     F = F_horzSpring_y(x, K_h, L_0, L_min, h_0);
     k = diff(F);
 
-    K_v = -vpa(subs(k,x,h_0)); %vertical spring stiffness that provides zero stiffness
+    K_v = -vpa(subs(k,x,h_0)) %vertical spring stiffness that provides zero stiffness
+    
+    preload_dist = preload_dist + M_above*9.81/K_v;
 
     % The total force in the vertical direction is the sum of the force
     % from the vertical and horizonatal springs
