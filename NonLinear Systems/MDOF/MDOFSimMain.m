@@ -16,7 +16,7 @@ C = [2*zeta(1)*sqrt(K(1)*M(1));2*zeta(2)*sqrt(K(2)*M(2))];
 
 s = tf('s');
 %[C(1)*s+K(1);0]
-sys = (C(1)*s+K(1))/([M(1) 0;0 M(2)]*s^2 + [C(1)+C(2) -C(2);-C(2) C(2)]*s + [K(1)+K(2) -K(2);-K(2) K(2)])
+sys = (C(1)*s+K(1))/([M(1) 0;0 M(2)]*s^2 + [C(1)+C(2) -C(2);-C(2) C(2)]*s + [K(1)+K(2) -K(2);-K(2) K(2)]);
 
 omega = [0:0.005:5]*3;
 
@@ -26,7 +26,7 @@ trans = [];
 freq_trans = [];
 % list of frequencies to simulate in time domain 
 freqList = [0.05,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,1.5,2,3,4,5,6,7,8,9,10];
-freqList = 0.1:0.05:1.2;
+freqList = 0.5:0.1:2.2;
 
 
 multiplier = 0.001; % amplitude for input
@@ -51,8 +51,8 @@ h_0 = 3/12*.3048; % initial height from horizontal to top (converting inches to 
 L_0 = 4/12*.3048; %length of horizontal springs (converting inches to m)
 L_min = sqrt(L_0^2-h_0^2); %min length of horizontal spring (check spring specs to make sure physically possible) 
 K_h = 17513.38; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
-preload_dist = 2/12*.3048; % preload on the vertical spring when x=0 (converting inches to m)
-k_plot(2,:) = get_k_nonLinear(disp_range, h_0, L_0, L_min, K_h, preload_dist);
+preload_dist = -1/12*.3048-0.001554; % preload on the vertical spring when x=0 (converting inches to m)
+k_plot(2,:) = get_k_nonLinear(disp_range, h_0, L_0, L_min, K_h, preload_dist, M(2));
 
 plot(disp_range, k_plot)
 
@@ -87,7 +87,7 @@ for i = 1:1:length(freqList)
         %%%%%%%%%%%%% Perform the time domain simulation %%%%%%%%%%%%%
         %
         %
-        [t_out, y_out] = ode45(@(t,q) MDOFStateSpaceSystem(t,q,freq,multiplier,M,C,disp_range,k_plot), t, x);
+        [t_out, y_out] = ode45(@(t,q) MDOFStateSpaceSystem(t,q,freq,multiplier,M,C,disp_range,k_plot,[0; 0]), t, x);
         %
         %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

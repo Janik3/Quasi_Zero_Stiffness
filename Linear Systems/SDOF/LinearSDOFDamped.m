@@ -43,7 +43,6 @@ hold off;
 
 
 %% Normallized System
-
 %want to go to 10hz, convert to rad/sec
 w_n = sqrt(K/M);
 r = omega/w_n;

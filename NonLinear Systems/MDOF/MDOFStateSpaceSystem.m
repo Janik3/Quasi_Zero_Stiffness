@@ -46,7 +46,7 @@ function dydt = MDOFStateSpaceSystem(t,q,freq,multiplier,M,C,disp_range,k_plot,F
     M_mat(nDOF+1:nStates,nDOF+1:nStates) = diag(M);
     
     F = zeros([nStates,nDOF+1]);
-    F(nDOF+1:end,2:end) = eye(nDOF);
+    F(nDOF+1:end,2:end) = eye(nDOF);%multiply input forces by unity (direct forces)
     F(1,1) = C(1)/M(1);
     if nDOF > 1
         F(nDOF+1,1) = (-(C(1)*(C(1)+C(2)))/(M(1)*M(1)))+(K(1)/M(1));
