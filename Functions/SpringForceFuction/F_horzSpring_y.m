@@ -11,5 +11,5 @@ function F_y = F_horzSpring_y(x, K_h, L_0, L_min, h_0)
 
     L = sqrt((h_0-x)^2 + L_min^2);
 
-    F_y =  2*K_h*(L - L_0)*(x-h_0)/(L);
+    F_y =  2*K_h*(L_0 - L)*(h_0-x)/(L);
 end

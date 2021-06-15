@@ -9,9 +9,9 @@ clc;
 %% Time Domain analysis
 
 %System parameters
-M = [4 ;90];
-K = [13000 ;17928];
-zeta = [0.05; 0.05]; 
+M = [4; 90];
+K = [3000; 17928];
+zeta = [0.3; 0.3]; 
 C = [2*zeta(1)*sqrt(K(1)*M(1));2*zeta(2)*sqrt(K(2)*M(2))];
 
 s = tf('s');
