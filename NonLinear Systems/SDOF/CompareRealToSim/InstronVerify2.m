@@ -6,7 +6,7 @@ clear all;
 close all;
 clc;
 
-files = dir('CombinedTestData\*.csv');
+files = dir('\\north.cfs.uoguelph.ca\soe-other-home$\jhabegge\My Documents\MASc\Matlab\ZSS\NonLinear Systems\SDOF\CompareRealToSim\CombinedTestData\*.csv');
 num_files = length(files);
 results = cell(length(files), 1);
 for i = 1:num_files

@@ -6,19 +6,30 @@ clear all;
 close all;
 clc;
 
+C = {'k','b','r','g'} ;
+
+files = dir('\\north.cfs.uoguelph.ca\soe-other-home$\jhabegge\My Documents\MASc\Matlab\ZSS\NonLinear Systems\SDOF\CompareRealToSim\CombinedTestData\*.csv');
+num_files = length(files);
+results = cell(length(files), 1);
+for i = 1:num_files
+  results{i} = xlsread(files(i).name);
+end
+
 %% 
 L_min = 3.25/12*.3048; % initial height from horizontal to top (converting inches to m)
 L0_springLen = 4/12*.3048;%+.044; %length of horizontal springs plus constant dist (converting inches to m)
 L0_constdist = (.81*2/12*.3048);
-total_hieght = 3.18/12*0.3048 + 4/12*.3048;
 
 %h_0 = sqrt(L_0^2-L_min^2); %min length of horizontal spring (check spring specs to make sure physically possible) 
 K_h = 1.55*1000*3; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
+K_h2 = 1.55*1000*2; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
+K_h3 = 1.55*1000*4; %horizontal spring stiffness (based on 100lbs/in, converted to N/m)
 %preload_dist = -((h_0 + 4/12*.3048 - 4/12*.3048)); % preload on the vertical spring when x=0 (converting inches to m), total height of part minus 4 inches (to have QZS point at zero)
 K_v = 6.95*1000; %1.85*4*1000;%8.62*1000; %1.85*4*1000; %8.62*1000;
 
 vertSpring = 8/12*0.3048;
-distToZero = 2.25*2/12*0.3048;
+distGroundToPivot = 2.25/12*0.3048;
+distPivotToTop = 2.5/12*0.3048;
 
 massTop = 50;
 dampingRatio = 0.2;
@@ -26,152 +37,42 @@ dampingRatio = 0.2;
 %% Create F and K plots for the designed Zero Stiffness System
 
 % The horizontal (negative stifness portions)
-system = NonlinearSys(K_v,K_h,L_min, L0_constdist, L0_springLen, total_hieght, vertSpring, distToZero, massTop, dampingRatio);
+system = NonlinearSys(K_v,K_h,L_min, L0_constdist, L0_springLen, distPivotToTop, vertSpring, distGroundToPivot, massTop, dampingRatio);
+system2 = NonlinearSys(K_v,K_h2,L_min, L0_constdist, L0_springLen, distPivotToTop, vertSpring, distGroundToPivot, massTop, dampingRatio);
+system3 = NonlinearSys(K_v,K_h3,L_min, L0_constdist, L0_springLen, distPivotToTop, vertSpring, distGroundToPivot, massTop, dampingRatio);
 %Convert to numbers
 x_nums = [-system.h_0*2:system.h_0*2/1000:3*system.h_0*2];
 
-[x_nums, F] = system.getStiffnessPlot(x_nums);
+[x_nums, F, system] = system.getStiffnessPlot(x_nums);
+[x_nums2, F2, system2] = system2.getStiffnessPlot(x_nums);
+[x_nums3, F3, system3] = system3.getStiffnessPlot(x_nums);
 
 K = diff(F);
 
 %Plots for the negative stiffness system
 figure
-subplot(2,1,1);
+subplot(1,1,1);
 hold on; 
 plot(x_nums, F);
+plot(x_nums, F2);
+plot(x_nums, F3);
+plot(x_nums, system.f_vert);
+
+for i = 13:16
+    if i == 13
+        results{i} = results{i}(results{i}(:,1) > (-0.12+.128)*1000,:); %remove extra values at beginning (due to shift below)
+        plot(results{i}(:,1)/1000-(5*9.81/K_v)-0.01412, results{i}(:,2),'.', 'color',C{i-12})
+    else
+        plot(results{i}(:,1)/1000-0.01412, results{i}(:,2),'.', 'color',C{i-12})
+    end
+end
 ylabel('F [N]')
 xlabel('Displacement from top [m]')
 title('Overall force of negative stiffness system')
-subplot(2,1,2)
-plot(x_nums, K);
+% subplot(2,1,2)
+% plot(x_nums, K);
 ylabel('K [N/m]')
 xlabel('Displacement from top [m]')
 title('Stiffness of negative stiffness system')
 hold off; 
 
-% 
-% % K_v = -K_nums(h_0/(h_0*2/1000)) ; %vertical spring stiffness that provides zero stiffness
-% % K_v = -vpa(subs(k,x,h_0));
-% % K_v = 17513.38
-%  
-% % F and K for the Zero Stiffness System (negative stiffness + positive
-% % stiffness) 
-% F_tot = F_horzSpring_y(x, K_h, L_0, L_min, h_0) + F_vertSpring_y(x, K_v, preload_dist);
-% k_tot = diff(F_tot);
-% 
-% %Convert to numbers
-% x_nums = [0:h_0*2/1000:h_0*2];
-% F_tot_nums = vpa(subs(F_tot,x,x_nums));
-% K_tot_nums = vpa(subs(k_tot,x,x_nums));
-% 
-% 
-% %Plots for the zero stiffness system
-% figure
-% subplot(2,1,1);
-% hold on; 
-% plot(x_nums, F_tot_nums);
-% ylabel('F [N]')
-% xlabel('Displacement from top [m]')
-% title('Overall force of zero stiffness system')
-% subplot(2,1,2)
-% plot(x_nums, K_tot_nums);
-% ylabel('K [N/m]')
-% xlabel('Displacement from top [m]')
-% title('Stiffness of zero stiffness system')
-% hold off;
-% 
-% 
-% 
-% %% Time Domain analysis
-% 
-% trans = []; 
-% freq_trans = [];
-% % list of frequencies to simulate in time domain 
-% freqList = [0.05,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1,1.5,2,3,4,5,6,7,8,9,10];
-% freqList = 0.5:0.2:7;
-% 
-% multiplier = 0.05; % amplitude for input
-% m = 55; %in kg
-% zeta = 0.2; %damping ratio
-% k_v = double(K_v); % vertical spring stiffness 
-% w_n = sqrt(k_v/m); % natural frequency of positive stiffness sys
-% c = 2*zeta*w_n*m; % damping for system 
-% 
-% %get the nonlinear k
-% disp_range = -100:0.01:100;
-% k_plot = get_k_nonLinear(disp_range, h_0, L_0, L_min, K_h, preload_dist, 0);
-% 
-% figure
-% plot(disp_range,k_plot)
-% 
-% for i = 1:1:length(freqList)
-%     forceSim = 1; % used to manually force a simulation that has previously already been completed
-%     
-%     %Print to screen 
-%     "Simulation at a frequency of :"
-%     freq = freqList(i)
-%     
-%     % time variables (Change as required)
-%     tf = 40/freq; % Final time 
-% 
-%     T = 0.001; % Sampling time
-%     t = 0:T:tf; % time vector
-%     t_span = [0 tf];
-% 
-%     %Initial Conditions
-%     x = [0 0]';
-%     u = inputFn(t,freq,multiplier);
-%     
-%     %for saving results (speeds up runs in the future) 
-%     figName = strcat('Figures/','ZSS_ ', strrep(num2str(freq),'.','') ,'_',  strrep(num2str(multiplier),'.',''), '_', strrep(num2str(m),'.',''), '_', strrep(num2str(zeta),'.',''), '_' , strrep(num2str(k_v),'.',''), '.jpeg');
-%     fileNameTime = strcat('Files/','ZSS, ', num2str(freq) ,',',  num2str(multiplier), ',', num2str(m), ',', num2str(zeta), ',' , num2str(k_v), 'time.txt');
-%     fileNameVals = strcat('Files/','ZSS, ', num2str(freq) ,',',  num2str(multiplier), ',', num2str(m), ',', num2str(zeta), ',' , num2str(k_v), 'vals.txt');
-%     
-%     if exist(fileNameVals) && forceSim == 0
-%         % this has already been simulated. Pull the reults. Do not repeat the simulation
-%         t_out = readmatrix(fileNameTime);
-%         y_out = readmatrix(fileNameVals);
-%     else
-%         %%%%%%%%%%%%% Perform the time domain simulation %%%%%%%%%%%%%
-%         %
-%         %
-%         [t_out, y_out] = ode45(@(t,y) designedSystem(t,y,freq,multiplier,m,c, disp_range, k_plot), t, x);
-%         %
-%         %
-%         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     end
-%     %calculate the transmission ratio 
-%     trans(i) = ampratiomeasure(u((length(u)/2):(length(u)-1)),y_out((length(y_out)/4):(length(y_out)-1)));
-%     freq_trans(i) = freq; 
-% 
-%     %plot time domain 
-%     figure
-%     hold on; 
-%     plot(t_out, y_out(:,1));
-%     plot(t, u);
-%     legend('Output Position[m]','Input Position (Ground Vibrations)[m]');
-%     ylabel('Displacement of top [m]')
-%     xlabel('Time [s]')
-%     title(strcat('Overall Displacement of Zero Stiffness System, freq = ', num2str(freq)));
-%     hold off; 
-%     saveas(gcf,figName);
-%     writematrix(y_out, fileNameVals);
-%     writematrix(t_out, fileNameTime);
-%     
-% end
-% 
-% %Positive Stiffness Transmissibility (closed form, may be incorreect) 
-% omega = [0:0.25:10]
-% %omega = freq/180*pi
-% trans_vert = @(omega) sqrt(k_v.^2 + (c.*omega).^2)./sqrt((-m.*omega.^2 + k_v).^2 + (c.*omega).^2)
-% trans_vert_nums = feval(trans_vert,omega*2*pi);
-% 
-% %Plot transmissibility 
-% figure()
-% hold on;
-% plot(freq_trans,trans);
-% plot(omega,trans_vert_nums);
-% ylabel('Transmission Ratio')
-% xlabel('Frequency [Hz]')
-% title('Transmissibility of Zero Stiffness System')
-% hold off; 

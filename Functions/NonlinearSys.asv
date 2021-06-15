@@ -21,7 +21,7 @@ classdef NonlinearSys
         min_x;                                  %maximum x value posssible(bottom out), m below zero stiffness
         
         f_vert;                                 %force in vertical direction
-        f_horz;                                 %force in horizontal direction
+        f_horz;                                 %force in horisz direction
     end
     methods
         function obj = NonlinearSys(K_v,K_h,L_min, L0_constdist, L0_springLen, distPivotToTop, vertSpring, distGroundToPivot, massTop, dampingRatio)
@@ -45,7 +45,7 @@ classdef NonlinearSys
             obj.max_x = obj.vert_GroundToPivot + obj.h_0             %maximum x value posssible(bottom out), m below zero stiffness
             obj.min_x = (obj.total_hieght - obj.vert_springLen); %maximum x value posssible(bottom out), m below zero stiffness
         end
-        function [x_out, Force_values, obj] = getStiffnessPlot(obj, x_in)
+        function [x_out, Force_values] = getStiffnessPlot(obj, x_in)
             syms 'x' 
             Fh = F_horzSpring_y(x, obj.K_h, obj.L_0, obj.L_min, obj.h_0);
             Fv = F_vertSpring_y(x, obj.K_v, obj.preload_dist);
@@ -58,8 +58,7 @@ classdef NonlinearSys
             F_vert(F_vert>F_vert(max_ix)) = 10000;
             F_vert = max(F_vert,F_vert(min_ix));
             
-            obj.f_vert = F_vert;
-            obj.f_horz = vpa(subs(Fh,x,x_in));
+            
             Force_values = vpa(subs(Fh,x,x_in)) + F_vert;
             
             x_out = x_in;
